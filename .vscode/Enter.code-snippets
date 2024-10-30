@@ -1,0 +1,19 @@
+{
+  "Basic React TS Component": {
+    "prefix": "rts",
+    "body": [
+      "import * as React from \"react\";",
+      "import { makeStyles } from \"@fluentui/react-components\";",
+      "",
+      "// Styles",
+      "const useStyles = makeStyles({});",
+      "export interface I${TM_FILENAME_BASE}Props {}",
+      "",
+      "export default function ${TM_FILENAME_BASE}(props: I${TM_FILENAME_BASE}Props) {",
+      "  const classes = useStyles();",
+      "  return <></>;",
+      "}"
+    ],
+    "description": "Creates a basic React TS component with minimal setup."
+  }
+}

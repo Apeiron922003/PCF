@@ -1,0 +1,11 @@
+{
+  "extends": "./node_modules/pcf-scripts/tsconfig_base.json",
+  "compilerOptions": {
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": [
+    "./**/*.ts", // Includes all TypeScript files in the current directory and subdirectories
+    "./**/*.tsx" // Include this if you plan to use JSX in your TypeScript files
+  ],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
