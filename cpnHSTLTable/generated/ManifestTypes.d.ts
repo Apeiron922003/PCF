@@ -7,4 +7,5 @@ export interface IInputs {
     Sources: ComponentFramework.PropertyTypes.DataSet;
 }
 export interface IOutputs {
+    selectedItem?: number;
 }

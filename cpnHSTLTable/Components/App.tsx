@@ -1,9 +1,10 @@
 import * as React from "react";
 import { FluentProvider, webLightTheme } from "@fluentui/react-components";
-import HSTLTable from "./HSTLTable/HSTLTable";
+import HSTLTable, { IDataProps, IHSTLTableProps } from "./HSTLTable/HSTLTable";
 import { IInputs, IOutputs } from "../generated/ManifestTypes";
+
 // Sample Data
-const taiLieuData = [
+const taiLieuData: IDataProps[] = [
   {
     ID: 1,
     Title: "Tài liệu A",
@@ -45,18 +46,39 @@ const taiLieuData = [
     NgayLayPhoto: "13/08/2024",
   },
 ];
-const App = (context: ComponentFramework.Context<IInputs>) => {
+interface IAppProps {
+  context: ComponentFramework.Context<IInputs>;
+  setSelectedItem: (selectedItem: number) => void;
+}
+const App = (props: IAppProps) => {
+  const [items, setItems] = React.useState<IDataProps[]>(taiLieuData);
+
+  React.useEffect(() => {
+    const data = props.context.parameters.Sources;
+    if (data.records["id0"].getValue("ID")) {
+      setItems(
+        data.sortedRecordIds.map((id: string): IDataProps => {
+          return {
+            ID: +data.records[id].getValue("ID").valueOf(),
+            Title: data.records[id].getValue("Title").toString(),
+            MaTaiLieu: data.records[id].getValue("MaTaiLieu").toString(),
+            TrangThai: {
+              Value: data.records[id].getValue("TrangThai").toString(),
+            },
+            NgayMuon: data.records[id].getValue("NgayTra").toString(),
+            NgayTra: data.records[id].getValue("NgayTra").toString(),
+            NgayGiaHan: data.records[id].getValue("NgayGiaHan").toString(),
+            NgayLayPhoto: data.records[id].getValue("NgayLayPhoto").toString(),
+          };
+        })
+      );
+    }
+  }, []);
+
   return (
     <FluentProvider theme={webLightTheme}>
-      <h1>{"Không có gì hấp dẫn"}</h1>
-      <button
-        onClick={() => {
-          console.log(context.parameters.sampleDataTest);
-        }}
-      >
-        Log
-      </button>
-      <HSTLTable taiLieuData={taiLieuData} />
+      <h1>HSTL cần xử lý</h1>
+      <HSTLTable taiLieuData={items} setSelectedItem={props.setSelectedItem} />
     </FluentProvider>
   );
 };
